@@ -1,0 +1,121 @@
+
+<%/****************************************************************************************
+ This comment is inside JavaScript exit marks, so it will not render on that HTML page.  
+ This page contains the HTML for the /memes path.  This page is populated with images from
+ the database.  There is a real life element to this page which you will explore and 
+ utilize in Part 1 of this lab.  The extension EJS stands for Embedded JavaScript and 
+ is HTML built by JavaScript (similar to when we used PHP combined with HTML). You will 
+ be building out another page similar to this, but limited to only images of a single user, 
+ as specified by a button click/hyperlink ("more by ..."). If you just want to reference a 
+ single variable you can use the javascript breakout called < % = and  close with % >, if 
+ you are doing a function or some data processing then you should not use the = in breaking 
+ out of your page generated html.
+ Again, this is similar to breaking out of html with <?php CODE ?>, but using < % CODE % > 
+ or, for printing out a single variable's value, < %= VARIABLE % >.
+ ***************************************************************************************/%>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<meta charset='utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type='text/javascript' src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type='text/javascript' src='/js/bootstrap.min.js'></script>
+	<script type='text/javascript' src="/socket.io/socket.io.js"></script>
+
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/style.css'/>
+
+	<title>MEMES!</title>
+
+</head>
+<body class="bd" background="../../images/awesome.jpg">
+	<div class='navbar navbar-inverse'>
+		<div class='navbar-inner'>
+			<div class='container'>
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class='nav-collapse collapse'>
+					<ul class='nav'>
+						<li id='home-nav-item'><a href='/memes'>Memes</a></li>
+						<li id='home-nav-item'><a href='/login'>Login</a></li>
+
+					</ul>
+					<ul class='nav pull-right'>
+						<li><a href='#'>Welcome</li>
+
+<!--You will want to add code here (PART 2) to allow you to display a custom message if a user is logged in (Welcome Bob!) or a generic message if no one is logged into the site (Welcome Guest User).  Similarly,
+if a user is not logged in you want a login button to display and no logout button, but if a user is logged in then you want to display a logout button.  You may need to break in and out of Node JS several times using "< % % >" and "< %= % >"-->
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<!-- If you uncomment the following line it will display a time stamp for the last time that the page was refreshed by the websockets, there is a line that needs to be uncommented near the end of the file as well.  This might be useful for part 2 of this lab -->
+		<!-- <time></time>  -->
+		<div id="wrapper">
+			<div id="columns">
+				<!-- The following line breaks out of html into NodeJS to process data passed to the view
+				from the controller. The "<% %>" indicates that you are breaking out of and then back into html. 
+				Notice that the open bracket for the for loop starts here, but ends after the html, meaning that 
+				the html between will be printed each time through the loop-->
+				<% for(i=0; i < infoList.length; i++ ){ 
+					divID = "id=\'block" + i + "\'" %>
+					<!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
+					<% for(j=0; j < userList.length; j++ ){ %>
+						<!-- The following line breaks out of html into NodeJS to process data passed to the view from the controller. The "< % % >" indicates that you are breaking out of and then back into html. -->
+						<% if (userList[j].UserId === infoList[i].UserID){ %>
+							<!-- Here is are examples of printing out a variable's value with "< %= % >" -->
+							<div class="pin back-image" <%=divID%>>
+								<img src="<%=infoList[i].image_path%>"   alt="<%=infoList[i].alt_text%>">
+								<button class="btn btn-primary btn-mini float-left" id="like<%=i%>" type="button" onClick="updateLikeCount(<%=infoList[i].image_id%>, this.id);">Likes: <%=infoList[i].numLikes%></button><br>
+								<a class="btn btn-info btn-mini" style="margin-top:5px;" href="/memes/<%=infoList[i].UserID%>/view">More by <%=userList[j].UserName%></a>
+							</div>
+						<% } %>
+					<% } %>
+				<% } %>
+			</div>	
+		</div>
+	</div>
+
+	<script>
+		// creating a new websocket
+		var socket = io.connect('http://1.1.1.1:1337');//change this IP address to the IP address of your server.
+	  	// on message received (socket updated) we add the new memes inside the '#container' div
+	  	socket.on('notification', function (data) {
+	  		var imagesListLength = data.images.length;
+	  		var image = data.images;
+	  		var comment = data.comments;
+	  		var user = data.users;
+
+/* DO WORK HERE IN PART 2!  This gives you all of the information being passed from the socket to the browser.  
+You need to figure out how to use that data to update the page when a new image is added to the database and the file structure.  
+We recommend using the Jquery ".append()" function.  You will need a couple of for loops and if statements with the append() function.*/
+	  		
+//If you what the '<time></time>' div to update with a time stamp you will need to uncomment that line and the following line.
+	  		//$('time').html('Last Update:' + data.time);
+	  	});
+		
+		// This function is called when the like button is clicked (see above where like button is added).
+	  	function updateLikeCount(data, id){
+  			//You will need to use socket.emit to send information to the server (server.js).  Use the function name (also called 'tag') 'button_click'.  
+	  	}
+		
+		// This function runs at the return of updateLikeCount (above) after it runs through the server.js file
+	  	socket.on('return_click', function (newImage, id){
+	  		//You will need to add jquery here to update the text for the button containing the like count. 
+	  	});
+
+	  </script>
+</body>
+</html>

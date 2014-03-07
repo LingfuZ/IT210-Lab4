@@ -1,0 +1,45 @@
+<%/************************************************************************************
+ This comment is inside JavaScript exit marks, so it will not render on that HTML page.  
+ This page contains the HTML for the login page. The extension EJS stands for Embedded 
+ JavaScript and is HTML built by JavaScript.
+ YOU SHOULD NOT NEED TO CHANGE THIS PAGE
+ ************************************************************************************/%>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type='text/javascript' src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type='text/javascript' src='/js/bootstrap.min.js'></script>
+
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/style.css'/>
+
+	<title>Node Login Page</title>
+
+	<style>
+
+	.bd{
+		background-attachment:fixed;
+		background-repeat: no-repeat;
+		background-size: cover; 
+		position:relative;
+	}
+	p, h1, h2, h3{
+		color: white;
+	}
+	.back-image{
+		background-color: grey;
+		border-radius: 15px;
+	}
+	</style>
+</head>
+<body class="bd" background="../../images/awesome1.jpg">
+	<div class="row-fluid">
+		<a class="btn btn-primary btn-large" style="margin-top:20%; margin-left:45%;" href="/auth/google">Login with Google</a>
+	</div>
+</body>
+</html>

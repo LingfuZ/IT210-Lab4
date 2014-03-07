@@ -1,0 +1,64 @@
+
+<%/****************************************************************************************
+ This comment is inside JavaScript exit marks, so it will not render on that HTML page.  
+ This page contains the HTML for the /memes path.  This page is populated with images from
+ the database.  There is a real life element to this page which you will explore and 
+ utilize in Part 1 of this lab.  The extension EJS stands for Embedded JavaScript and 
+ is HTML built by JavaScript. (similar to when we used PHP combined with HTML) Populate this
+ page similar to memes.ejs but with images from a single user instead of all users. 
+ ***************************************************************************************/%>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<meta charset='utf-8'/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type='text/javascript' src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type='text/javascript' src='/js/bootstrap.min.js'></script>
+	<script type='text/javascript' src="/socket.io/socket.io.js"></script>
+
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/bootstrap-responsive.min.css'/>
+	<link rel='stylesheet' type='text/css' href='/css/style.css'/>
+
+	<title>MEMES!</title>
+
+</head>
+<body class="bd" background="../../images/awesome.jpg">
+	<div class='navbar navbar-inverse'>
+		<div class='container'>
+			<button type="butoon" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<div class='nav-collapse collapse'>
+				<ul class='nav'>
+					<li id='home-nav-item'><a href='/memes'>Memes</a></li>
+					<li id='home-nav-item'><a href='/login'>Login</a></li>
+				</ul>
+				<ul class='nav pull-right'>
+					<li><a href='#'>Welcome<li>
+				</ul>
+			</div>
+		<div>
+	<div><!-- navigation bar -->
+	<div class="row-fluid">
+		<div id="wrapper">
+			<div id="columns">
+				<% for(i = 0; i < imageList.length; i++) {
+					var divID = "id=\'block" + i + "\'" %>
+					<div class="pin back-image" <%=divID%>>
+						<img src="<%=imageList[i].image_path%>" alt="<%=imageList[i].alt_text%>">
+						<button class="btn btn-primary btn-mini float-left" id="like<%=i%>" type="button">Likes: <%=imageList[i].numLikes%></button>
+					</div>
+				<% } %>
+			</div>
+		</div>
+	</div><!-- images showcase -->
+</body>
+</html>

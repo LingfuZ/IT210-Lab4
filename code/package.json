@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "async": "*",
+    "ejs-locals": "*",
+    "express": "3.0.0",
+    "mysql": "*",
+    "passport": "*",
+    "passport-google": "*",
+    "sequelize": "*",
+    "socket.io": "*"
+  }
+}
